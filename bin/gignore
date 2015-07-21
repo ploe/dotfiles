@@ -1,0 +1,11 @@
+#! /bin/bash
+
+if [ -z $1 ]; then
+	echo "usage: gignore [PATTERNS...]" 1>&2;
+	echo "gignore sticks the specified patterns in the .gitignore file for the repo. You can specify more than one." 1>&2;
+else
+	for p in "$@"
+	do
+		echo $p >> `git rev-parse --show-toplevel`/.gitignore
+	done
+fi
