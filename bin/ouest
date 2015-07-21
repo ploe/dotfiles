@@ -1,0 +1,10 @@
+#! /bin/bash
+
+# feeds a find in to grep to look for files in the wd
+if [ -z $1 ]; then
+	echo "usage: ouest [PATTERN]" 1>&2;
+	echo "ouest finds a files with the pattern given from the current working directory." 1>&2;
+else
+	find | grep -i --color $1;
+	# also highlights
+fi
