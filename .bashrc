@@ -18,10 +18,13 @@ alias grep="grep --color"
 
 # git
 alias gadd="git add"
-alias gcm="git commit -a"
+alias gca="git commit -a"
+alias gcm="git commit"
 alias gst="git status"
 alias gck="git checkout"
-alias gbranch="git checkout -b"
+alias gnew="git checkout -b"
+alias gbr="git branch"
+alias gpush="git push origin `gbr | grep '^\*' | sed 's/^\* //'`"
 
 # vagrant
 alias vpath="export MYKE_VAGRANTPATH=\`pwd\` && echo \"Vagrantfile path is '\$MYKE_VAGRANTPATH'\" 1>&2"
