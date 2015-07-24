@@ -24,7 +24,7 @@ alias gst="git status"
 alias gck="git checkout"
 alias gnew="git checkout -b"
 alias gbr="git branch"
-alias gpush="git push origin `gbr | grep '^\*' | sed 's/^\* //'`"
+alias gpush="git push origin \`gbr | grep '^\*' | sed 's/^\* //'\`"
 
 # vagrant
 alias vpath="export MYKE_VAGRANTPATH=\`pwd\` && echo \"Vagrantfile path is '\$MYKE_VAGRANTPATH'\" 1>&2"
@@ -34,3 +34,7 @@ alias vdie="vcd; vagrant destroy; cd -"
 alias vredo="vcd; vagrant destroy -f && vagrant up; cd -"
 alias vssh="vcd; vagrant ssh; cd -"
 alias vpro="vcd; vagrant provision; cd -"
+
+# docker
+alias dbuild="sudo docker build --tag \`cat image_name\` ."
+alias dpush="sudo docker push \`cat image_name\`"
