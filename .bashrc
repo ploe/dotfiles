@@ -1,8 +1,13 @@
 source '/home/atkinsonm/.priv'
 
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
 # sh
 export PS1="\[\e[1;32m\]\u\[\e[m\]@\[\e[1;33m\]\h\[\e[m\] \W \$ "
 export PATH="$PATH:/home/atkinsonm/bin"
+
+alias pash="date | sha1sum"
+alias secs="date +%s"
 
 # ls
 alias ls="ls --color"
@@ -38,3 +43,4 @@ alias vpro="vcd; vagrant provision; cd -"
 # docker
 alias dbuild="sudo docker build --tag \`cat image_name\` ."
 alias dpush="sudo docker push \`cat image_name\`"
+alias dbup="dbuild && dpush"
