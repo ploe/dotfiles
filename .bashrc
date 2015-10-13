@@ -9,6 +9,8 @@ export PATH="$PATH:/home/atkinsonm/bin"
 alias pash="date | sha1sum"
 alias sex="date +%s"
 
+alias fix-resolv="sudo su -c 'echo \"nameserver 8.8.8.8\" > /etc/resolv.conf'"
+
 alias rootify="export MYKE_ROOT=\`pwd\` && echo \"rcd path is '\$MYKE_ROOT'\" 1>&2"
 alias rcd="cd \$MYKE_ROOT"
 
