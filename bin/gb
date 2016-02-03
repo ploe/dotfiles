@@ -1,4 +1,7 @@
 #! /usr/bin/perl
+
+use Term::ANSIColor;
+
 # Changes the git branch by selecting a number
 
 my @branches = `git branch`;
@@ -6,12 +9,15 @@ my @options;
 
 my $i = 1;
 print "No.\tBranch Name.\n";
-print "---------------------\n";
+print "--------------------\n";
 for my $b (@branches) {
 	chomp $b;
 
-	my $prompt;
-	$prompt = " (selected)" if ($b =~ /\*/);
+	my $prompt = "";
+	if ($b =~ /\*/) {
+		print color('green');
+		$prompt = "\t(checked out)"
+	}
 	# Removes the preceding space junk
 	
 	$b =~ s/^[ *] //g;
@@ -19,16 +25,17 @@ for my $b (@branches) {
 	# Sticks the amended options in a new array and prints 'em
 	push @options, $b;
 	print "$i:\t$b$prompt\n";
+	print color('reset');
 	$i++;
 }
 
 # Only a choice between 1 and i is valid.
-print STDERR "\nWhat is the number of the branch you want to checkout? ";
+print STDERR colored("\nWhat is the number of the branch you want to checkout? ", 'yellow');
 my $choice = int(<STDIN>);
 if ($choice > 0 && $choice < $i) {
 	$choice--;
 	system "git checkout $options[$choice]";
 } else {
 	$i--;
-	print STDERR "Invalid selection. Options are from 1-$i.\n";
+	print STDERR colored("Invalid selection. Options are from 1-$i.\n", "red");
 }
