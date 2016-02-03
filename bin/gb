@@ -8,12 +8,17 @@ my $i = 1;
 print "No.\tBranch Name.\n";
 print "---------------------\n";
 for my $b (@branches) {
+	chomp $b;
+
+	my $prompt;
+	$prompt = " (selected)" if ($b =~ /\*/);
 	# Removes the preceding space junk
+	
 	$b =~ s/^[ *] //g;
 
 	# Sticks the amended options in a new array and prints 'em
 	push @options, $b;
-	print "$i:\t$b";
+	print "$i:\t$b$prompt\n";
 	$i++;
 }
 
