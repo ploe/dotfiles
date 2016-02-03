@@ -33,7 +33,7 @@ alias gs="git status"
 alias gco="git checkout"
 alias gcb="git checkout -b"
 alias gba="git branch -a"
-alias gp="git push origin \`gb | grep '^\*' | sed 's/^\* //'\`"
+alias gp="git push origin \`git branch | grep '^\*' | sed 's/^\* //'\`"
 alias gcap="gca && gp"
 # librarian-puppet
 
