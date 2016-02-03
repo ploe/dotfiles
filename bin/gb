@@ -1,0 +1,29 @@
+#! /usr/bin/perl
+# Changes the git branch by selecting a number
+
+my @branches = `git branch`;
+my @options;
+
+my $i = 1;
+print "No.\tBranch Name.\n";
+print "---------------------\n";
+for my $b (@branches) {
+	# Removes the preceding space junk
+	$b =~ s/^[ *] //g;
+
+	# Sticks the amended options in a new array and prints 'em
+	push @options, $b;
+	print "$i:\t$b";
+	$i++;
+}
+
+# Only a choice between 1 and i is valid.
+print STDERR "\nWhat is the number of the branch you want to checkout? ";
+my $choice = int(<STDIN>);
+if ($choice > 0 && $choice < $i) {
+	$choice--;
+	system "git checkout $options[$choice]";
+} else {
+	$i--;
+	print STDERR "Invalid selection. Options are from 1-$i.\n";
+}
