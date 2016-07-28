@@ -1,0 +1,38 @@
+#! /usr/bin/ruby
+
+require 'json'
+
+
+if ARGV.length < 2 then
+	$stderr.puts "henry set [keys...]\n\tSets the bookmarks for each of the [keys...] to the working directory."
+	$stderr.puts "henry get [keys...]\n\tGets the bookmarks for each of the [keys...] and prints them to stdout."
+	exit -1
+end
+	
+f = File.read("/home/atkinsonm/.bookmarks")
+bookmarks = {}
+if f != "" then 
+	bookmarks = JSON.parse(f)
+end
+
+method = ARGV[0].downcase
+
+(1..(ARGV.length-1)).each do |i|
+	key = ARGV[i]
+	if  method == 'set' then
+		bookmarks[key] = Dir.pwd
+
+	elsif method == 'get' then
+		value = bookmarks[key]
+		if value == nil then 
+			$stderr.puts "'henry: #{key}' does not exist in bookmarks."
+		else
+			puts value
+		end
+	else
+		 $stderr.puts "henry: '#{method}' is undefined."
+	end
+	
+end
+
+File.write("/home/atkinsonm/.bookmarks", JSON.generate(bookmarks))

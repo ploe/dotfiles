@@ -9,10 +9,16 @@ export PATH="$PATH:/home/atkinsonm/bin"
 alias pash="date | sha1sum"
 alias sex="date +%s"
 
+# Perl one-liners
+alias lc="perl -pe '\$_ = lc \$_'"
+alias uc="perl -pe '\$_ = uc \$_'"
+
 alias fix-resolv="sudo su -c 'echo \"nameserver 8.8.8.8\" > /etc/resolv.conf'"
 
 alias rootify="export MYKE_ROOT=\`pwd\` && echo \"rcd path is '\$MYKE_ROOT'\" 1>&2"
 alias rcd="cd \$MYKE_ROOT"
+
+alias dino-time="cd ~/code/dino/infr && rootify && cd provisioning/deployment-dev && vify && rcd && alias vagrant=\". vagrantrc && $(which vagrant)\""
 
 # docker
 alias d="sudo docker"
@@ -53,4 +59,10 @@ alias vd="vcd; vagrant destroy; cd -"
 alias vr="vcd; vagrant destroy -f && vagrant up; cd -"
 alias vsh="vcd; vagrant ssh; cd -"
 alias vp="vcd; vagrant provision; cd -"
+alias vh="vcd; vagrant halt; cd -"
 
+# henry aliases
+
+function hcd {
+	cd $(henry get $1)
+}
