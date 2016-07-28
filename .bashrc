@@ -63,6 +63,10 @@ alias vh="vcd; vagrant halt; cd -"
 
 # henry aliases
 
+alias h="henry" 
+alias hls="cat ~/.bookmarks 2>&1 && echo 2>&1"
+
 function hcd {
 	cd $(henry get $1)
 }
+

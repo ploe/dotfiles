@@ -21,7 +21,7 @@ method = ARGV[0].downcase
 	key = ARGV[i]
 	if  method == 'set' then
 		bookmarks[key] = Dir.pwd
-
+		$stderr.puts "henry: '#{key}' set to '#{bookmarks[key]}'"
 	elsif method == 'get' then
 		value = bookmarks[key]
 		if value == nil then 
@@ -35,4 +35,4 @@ method = ARGV[0].downcase
 	
 end
 
-File.write("/home/atkinsonm/.bookmarks", JSON.generate(bookmarks))
+File.write("/home/atkinsonm/.bookmarks", JSON.pretty_generate(bookmarks))
