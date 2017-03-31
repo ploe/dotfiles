@@ -1,6 +1,8 @@
-source '/home/atkinsonm/.priv'
+#source '/home/atkinsonm/.priv'
+#source '/home/atkinsonm/.venvburrito/startup.sh'
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+alias pub="cat /home/atkinsonm/.ssh/id_rsa.pub"
+# [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 # sh
 export PS1="\[\e[1;32m\]\u\[\e[m\]@\[\e[1;33m\]\h\[\e[m\] \W \\\$ "
@@ -19,6 +21,10 @@ alias rootify="export MYKE_ROOT=\`pwd\` && echo \"rcd path is '\$MYKE_ROOT'\" 1>
 alias rcd="cd \$MYKE_ROOT"
 
 alias dino-time="cd ~/code/dino/infr && rootify && cd provisioning/deployment-dev && vify && rcd && alias vagrant=\". vagrantrc && $(which vagrant)\""
+
+function dcp-time {
+	alias play='ansible-playbook -vvv playbooks/dcp/ansible-deployment.yml -i inventory/dcp/microservice-slave -l ansible-slave'
+}
 
 # docker
 alias d="sudo docker"
@@ -50,6 +56,9 @@ alias ls="ls --color"
 alias ll="ls -l --color"
 alias lt="ls -lt --color"
 
+# rm
+alias rm="rm -Irv"
+
 # vagrant
 alias v="vagrant"
 alias vify="export MYKE_VAGRANTPATH=\`pwd\` && echo \"Vagrantfile path is '\$MYKE_VAGRANTPATH'\" 1>&2"
@@ -64,9 +73,54 @@ alias vh="vcd; vagrant halt; cd -"
 # henry aliases
 
 alias h="henry" 
-alias hls="cat ~/.bookmarks 2>&1 && echo 2>&1"
+alias hls="cat ~/.henry.json 2>&1 && echo 2>&1"
 
 function hcd {
 	cd $(henry get $1)
 }
 
+
+function run_azure() {
+    sudo docker run --rm \
+    -v ~/.azure:/home/user/.azure \
+    -v ~/.ssh:/home/user/.ssh:ro \
+    -v ~/bin:/home/user/bin \
+    -v ~/.bashrc:/home/user/.bashrc \
+    -v $(pwd):/home/user/$(basename `pwd`) \
+    -h azure-0-10-0 \
+    -u user -it jacderida/azure-cli:0.10.0
+}
+alias az="run_azure"
+
+# Ansible
+alias ansible="workon ansible && ansible --vault-password-file ~/.ansible/password -e ansible_user=atkinsonm"
+alias ansible-playbook="workon ansible && ansible-playbook --vault-password-file ~/.ansible/password -e ansible_user=atkinsonm"
+alias ansible-vault="workon ansible && ansible-vault --vault-password-file ~/.ansible/password"
+alias ansible-galaxy="workon ansible && ansible-galaxy"
+# --vault-password-file ~/.ansible/password -e ansible_user=atkinsonm"
+#alias start-ansible="workon ansible; cd ~/git/ansible_infrastructure/"
+
+function run_oc() {
+    sudo docker run --rm \
+    -v ~/.ssh:/home/user/.ssh \
+    -v ~/.bashrc:/home/user/.bashrc \
+    -v $(pwd):/home/user/$(basename `pwd`) \
+    -h oc-3-1-1-6 \
+    -u user -it jacderida/openshift-enterprise-client-tools:3.1.1.6
+}
+alias ose="run_oc"
+source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
+
+# pip bash completion start
+_pip_completion()
+{
+    COMPREPLY=( $( COMP_WORDS="${COMP_WORDS[*]}" \
+                   COMP_CWORD=$COMP_CWORD \
+                   PIP_AUTO_COMPLETE=1 $1 ) )
+}
+complete -o default -F _pip_completion pip
+# pip bash completion end
+
+source ~/.local/bin/virtualenvwrapper.sh
+export WORKON_HOME=/home/atkinsonm/.virtualenvs
+export PIP_VIRTUALENV_BASE=/home/atkinsonm/.virtualenvs
